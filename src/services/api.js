@@ -1,12 +1,12 @@
 
 import { Path } from './Path'
 
-export const csvUpload = async (file) => {
+ const csvUpload = async (file) => {
     console.log(file,'ffff');
     let getData = []
 
     var formdata = new FormData();
-    formdata.append("myfile", file.file);
+    formdata.append("file", file.file);
   
 
     var req = { method: 'POST', body: formdata, };
@@ -24,11 +24,27 @@ export const csvUpload = async (file) => {
 
 
 }
+ const printInvoice = async () => {
+    
+    let getData = [];
+ 
 
+    let req = new Request(Path.getinvoice, {  method: 'get' })
+
+    await fetch(req)
+        .then(res => res.json())
+        .then((dat) => { getData = dat; })
+        .catch(err => { alert("error", err.message); getData = false })
+    if (getData?.success === 'false') {
+        alert(getData.message); getData = false
+    }
+
+    return getData
+}
 
 
 
 
 export default {
-    csvUpload
+    csvUpload,printInvoice
 }
